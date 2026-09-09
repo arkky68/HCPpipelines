@@ -118,6 +118,13 @@ opts_AddOptional '--matlab-run-mode' 'MatlabMode' '0, 1, or 2' "defaults to $g_m
 
 opts_ParseArguments "$@"
 
+if ((pipedirguessed))
+then
+    log_Err_Abort "HCPPIPEDIR is not set, you must first source your edited copy of Examples/Scripts/SetUpHCPPipeline.sh"
+fi
+
+#display the parsed/default values
+opts_ShowValues
 # if Group sICA hand classifications exists, use it to filter the group sICA components before projecting to individuals
 HandSignalFile="${StudyFolder}/${GroupAverageName}/MNINonLinear/Results/${OutputfMRIName}/sICA/HandSignal.txt"
 if [ -e "${HandSignalFile}" ]; then
@@ -131,13 +138,6 @@ else
     tICADim=""
 fi
 
-if ((pipedirguessed))
-then
-    log_Err_Abort "HCPPIPEDIR is not set, you must first source your edited copy of Examples/Scripts/SetUpHCPPipeline.sh"
-fi
-
-#display the parsed/default values
-opts_ShowValues
 
 #processing code goes here
 IFS='@' read -a fMRINamesArray <<<"$fMRINames"
@@ -704,6 +704,11 @@ do
             then
                 #skip to next pipeline stage
                 continue
+            fi
+            if [[ "$sicadimOverride" ]]; then
+                sICAActualDim="$sicadimOverride"
+            else
+                sICAActualDim=$(cat "$sICAoutfolder/most_recent_dim.txt")
             fi
             "$HCPPIPEDIR"/tICA/scripts/ClassifyTICA.sh \
                 --study-folder="$StudyFolder" \
