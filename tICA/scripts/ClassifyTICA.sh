@@ -20,7 +20,7 @@ opts_AddMandatory '--ica-dim' 'tICAdim' 'integer' "number of temporal ICA compon
 
 opts_AddOptional '--python-singularity' 'PythonSingularity' 'string' "the file path of the singularity, specify empty string to use native environment instead" ""
 opts_AddOptional '--python-singularity-mount-path' 'PythonSingularityMountPath' 'string' "the file path of the mount path for singularity" ""
-opts_AddOptional '--python-interpreter' 'PythonInterpreter' 'string' "the python interpreter path" ""
+opts_AddOptional '--python-interpreter' 'PythonInterpreter' 'string' "the python executable, default 'python3' (from PATH)" "python3"
 opts_AddOptional '--model-folder' 'ModelFolder' 'string' "folder containing the converted .onnx tICA classifier models" "$HCPPIPEDIR/tICA/classify_models"
 opts_AddOptional '--keep-features-json' 'KeepFeaturesJson' 'string' "feature column config used at training time" "$HCPPIPEDIR/global/config/tICA/keep_features_v1.json"
 opts_AddOptional '--threshold' 'Threshold' 'number' "decision threshold for signal vs noise" "0.5"
