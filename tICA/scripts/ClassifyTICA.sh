@@ -48,11 +48,9 @@ if [[ "$PythonSingularity" != "" ]]; then
         log_Err_Abort "Singularity is not installed or not in PATH."
     fi
     UseLocalPython="FALSE"
-    singularity_command=(singularity exec --bind "$PythonSingularityMountPath" "$PythonSingularity" python3)
+    PythonCmd=(singularity exec --bind "$PythonSingularityMountPath" "$PythonSingularity" python3)
 else
-    if [ ! -f "$PythonInterpreter" ]; then
-        PythonInterpreter="python3"
-    fi
+    PythonCmd=("$PythonInterpreter")
 fi
 
 OutputFolder="$StudyFolder/$GroupAverageName/MNINonLinear/Results/$OutputfMRIName/tICA_d$tICAdim"
